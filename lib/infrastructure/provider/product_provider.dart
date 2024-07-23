@@ -23,13 +23,14 @@ class ProductProvider with ChangeNotifier {
   addFavourite(int favProductID) async {
     User? user = _auth.currentUser;
     try {
+
       if (user != null) {
         _favProductList ??= [];
         if (!_favProductList!.contains(favProductID)) {
           _favProductList?.add(favProductID);
           print(_favProductList?.first);
           notifyListeners();
-        }else{
+        } else {
           _favProductList?.remove(favProductID);
           notifyListeners();
         }
@@ -52,6 +53,7 @@ class ProductProvider with ChangeNotifier {
   //   return intList;
   // }
 
+  /// get favourite List from firestore database
   Future<List<int>> getFavouriteList() async {
     List<int> favouriteProducts = [];
     try {
@@ -72,6 +74,7 @@ class ProductProvider with ChangeNotifier {
     return favouriteProducts;
   }
 
+  // get Product list API method
   Future getProductDataList(
     BuildContext context,
   ) async {

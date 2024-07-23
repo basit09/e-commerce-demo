@@ -61,7 +61,6 @@ class _SignupScreenState extends ConsumerState<LoginScreen> {
           child: SizedBox(
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -96,7 +95,9 @@ class _SignupScreenState extends ConsumerState<LoginScreen> {
                     const Text("Don't have an account? "),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignUpScreen(),));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SignUpScreen(),
+                        ));
                       },
                       child: const Text(
                         "SignUp",

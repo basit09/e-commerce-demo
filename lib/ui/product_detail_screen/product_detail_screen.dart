@@ -17,14 +17,15 @@ class ProductDetailScreen extends ConsumerStatefulWidget {
 
 class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final List<int> myFavourites =
-          await ref.read(productProvider).getFavouriteList();
-
-    },);
-      }
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        final List<int> myFavourites =
+            await ref.read(productProvider).getFavouriteList();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

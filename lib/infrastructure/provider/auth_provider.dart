@@ -22,6 +22,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  /// user logged in or not
   isUserLoggedIn() async {
     _auth.authStateChanges().listen((User? user) {
       if (user != null) {
@@ -78,7 +79,6 @@ class AuthProvider with ChangeNotifier {
           password: password,
         );
         // add user to your  firestore database
-        print(cred.user!.uid);
         await _firestore.collection("users").doc(cred.user!.uid).set({
           'name': name,
           'uid': cred.user!.uid,
@@ -117,7 +117,6 @@ class AuthProvider with ChangeNotifier {
   }
 
   // for signout
-
   signOut() async {
     await _auth.signOut();
   }
