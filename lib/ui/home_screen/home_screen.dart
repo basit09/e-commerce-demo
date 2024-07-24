@@ -106,9 +106,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         productProviderWatch.productList?[index].title ?? '',
                         maxLines: 2,
                       ),
-                      subtitle:  Text(
-                        "\$${productProviderWatch.productList?[index].price.toString() ?? ''}",
-                        maxLines: 2,
+                      subtitle:  Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "\$${productProviderWatch.productList?[index].price.toString() ?? ''}",
+                            maxLines: 2,
+                          ),
+                          Text(
+                            productProviderWatch.productList?[index]?.description ?? '',
+                            maxLines: 2,
+                          ),
+                        ],
                       ) ,
                       onTap: () {
                         Navigator.push(
