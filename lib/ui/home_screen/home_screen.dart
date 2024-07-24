@@ -52,11 +52,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       builder: (context) => const FavouriteScreen(),
                     ));
               },
-              child: const Icon(Icons.favorite_border_rounded))
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Container(
+                  height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF000000).withOpacity(0.5),
+                            // Semi-transparent black
+                            spreadRadius: 0,
+                            blurRadius: 5,
+                            offset: const Offset(0, 5),
+                          )
+                        ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)
+                    ),
+                    child: const Icon(Icons.favorite_border_rounded,color: Colors.red,)),
+              ))
         ],
-        title: Text(
+        title: const Text(
           'Product List',
-          style: TextStyle(color: Colors.orange.withOpacity(0.5), fontSize: 25),
+          style: TextStyle(color: Colors.black, fontSize: 25),
         ),
         centerTitle: true,
       ),
@@ -87,6 +106,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         productProviderWatch.productList?[index].title ?? '',
                         maxLines: 2,
                       ),
+                      subtitle:  Text(
+                        "\$${productProviderWatch.productList?[index].price.toString() ?? ''}",
+                        maxLines: 2,
+                      ) ,
                       onTap: () {
                         Navigator.push(
                             context,
@@ -97,6 +120,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ));
                       },
+
                       leading: CachedNetworkImage(
                         imageUrl: productProviderWatch
                                 .productList?[index].category?.image ??

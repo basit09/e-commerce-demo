@@ -19,6 +19,7 @@ class _FavouriteScreenState extends ConsumerState<FavouriteScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         ref.read(productProvider).getFavData();
+        print(ref.read(productProvider).favProductsData);
       },
     );
 
@@ -31,68 +32,72 @@ class _FavouriteScreenState extends ConsumerState<FavouriteScreen> {
     final productProviderWatch = ref.watch(productProvider);
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           'Favourites',
-          style: TextStyle(fontSize: 15),
+          style: TextStyle(fontSize: 20, color: Colors.black),
         ),
       ),
-      body: ListView.separated(
+      body: (productProviderWatch.favProductsData?.isNotEmpty ??
+    false || productProviderWatch.favProductsData != null) ?
+      ListView.separated(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            return Container(
-              padding: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
-              margin: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF000000).withOpacity(0.5),
-                      // Semi-transparent black
-                      spreadRadius: 0,
-                      blurRadius: 15,
-                      offset: const Offset(0, 5),
-                    )
-                  ]),
-              child: ListTile(
-                title: Text(
-                  productProviderWatch.favProductsData?[index].title ?? '',
-                  maxLines: 2,
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailScreen(
-                          productModel:
-                              productProviderWatch.favProductsData?[index],
-                        ),
-                      ));
-                },
-                leading: CachedNetworkImage(
-                  imageUrl: productProviderWatch
-                          .favProductsData?[index].category?.image ??
-                      '',
-                  placeholder: (context, url) {
-                    if (url.isEmpty) {
-                      return const CircularProgressIndicator();
-                    } else {
-                      return Image.network(
-                        url ?? '',
-                        height: 100,
-                        width: 100,
-                      );
-                    }
+              return Container(
+                padding: const EdgeInsets.only(right: 12, top: 12, bottom: 12),
+                margin: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF000000).withOpacity(0.5),
+                        // Semi-transparent black
+                        spreadRadius: 0,
+                        blurRadius: 15,
+                        offset: const Offset(0, 5),
+                      )
+                    ]),
+                child: ListTile(
+                  title: Text(
+                    productProviderWatch.favProductsData?[index].title ?? '',
+                    maxLines: 2,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailScreen(
+                            productModel:
+                                productProviderWatch.favProductsData?[index],
+                          ),
+                        ));
                   },
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  leading: CachedNetworkImage(
+                    imageUrl: productProviderWatch
+                            .favProductsData?[index].category?.image ??
+                        '',
+                    placeholder: (context, url) {
+                      if (url.isEmpty) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return Image.network(
+                          url ?? '',
+                          height: 100,
+                          width: 100,
+                        );
+                      }
+                    },
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
                 ),
-              ),
-            );
+              );
           },
           separatorBuilder: (context, index) => const SizedBox(
                 height: 10.0,
               ),
-          itemCount: productProviderWatch.favProductsData?.length ?? 0),
+          itemCount: productProviderWatch.favProductsData?.length ?? 0) : const Center(child: Text('No favourites added',)),
     );
   }
 }

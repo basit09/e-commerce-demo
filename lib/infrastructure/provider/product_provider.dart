@@ -9,7 +9,6 @@ class ProductProvider with ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-
   List<ProductModel>? get productList => _productList;
   List<ProductModel>? _productList;
 
@@ -19,21 +18,18 @@ class ProductProvider with ChangeNotifier {
   List<ProductModel>? get favProductsData => _favProductsData;
   List<ProductModel>? _favProductsData;
 
-  setFavouriteList(List<int> value){
+  setFavouriteList(List<int> value) {
     _favProductList = value;
     print(_favProductList);
   }
 
-
   addFavourite(int favProductID) async {
     User? user = _auth.currentUser;
     try {
-
       if (user != null) {
         _favProductList ??= [];
         if (!_favProductList!.contains(favProductID)) {
           _favProductList?.add(favProductID);
-          print(_favProductList?.first);
           notifyListeners();
         } else {
           _favProductList?.remove(favProductID);
@@ -80,24 +76,22 @@ class ProductProvider with ChangeNotifier {
     return favouriteProducts;
   }
 
-  List<ProductModel>? getFavData(){
+  List<ProductModel>? getFavData() {
     if (_productList == null || _favProductList == null) {
       return null; // or throw an exception, depending on your requirements
     }
 
     _favProductsData = [];
     _productList?.forEach(
-          (element) {
+      (element) {
         if (_favProductList?.contains(element.id) ?? false) {
           _favProductsData?.add(element);
-          print(_favProductsData?.first);
         }
       },
     );
     notifyListeners();
     return _favProductsData;
   }
-
 
   // get Product list API method
   Future getProductDataList(
@@ -120,5 +114,4 @@ class ProductProvider with ChangeNotifier {
       print(e.toString());
     }
   }
-
 }

@@ -54,6 +54,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ref
                       .read(productProvider)
                       .addFavourite(widget.productModel?.id ?? 0);
+                  ref.read(productProvider).getFavData();
                 },
                 child: (ref
                             .watch(productProvider)
