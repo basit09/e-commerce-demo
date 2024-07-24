@@ -8,6 +8,7 @@ class TextFieldInput extends StatelessWidget {
   final IconData? icon;
   final TextInputType textInputType;
   final Function(String)? onSubmitted;
+  final bool? enabled;
   const TextFieldInput({
     super.key,
     required this.textEditingController,
@@ -15,7 +16,8 @@ class TextFieldInput extends StatelessWidget {
     required this.hintText,
     this.icon,
     required this.textInputType,
-    this.onSubmitted
+    this.onSubmitted,
+    this.enabled,
   });
 
   @override
@@ -23,6 +25,7 @@ class TextFieldInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: TextField(
+        enabled: enabled,
         onSubmitted: onSubmitted,
         style: const TextStyle(fontSize: 20),
         controller: textEditingController,

@@ -16,9 +16,14 @@ class ProductProvider with ChangeNotifier {
   List<int>? get favProductList => _favProductList;
   List<int>? _favProductList;
 
+  List<ProductModel>? get favProductsData => _favProductsData;
+  List<ProductModel>? _favProductsData;
+
   setFavouriteList(List<int> value){
     _favProductList = value;
+    print(_favProductList);
   }
+
 
   addFavourite(int favProductID) async {
     User? user = _auth.currentUser;
@@ -40,7 +45,7 @@ class ProductProvider with ChangeNotifier {
           .doc(user?.uid)
           .update({'favourite_products_list': _favProductList});
       notifyListeners();
-      print('updated favourite list : ${_favProductList?.first}');
+      print('updated favourite list : $_favProductList');
     } catch (e) {
       print(e.toString());
     }
@@ -66,6 +71,7 @@ class ProductProvider with ChangeNotifier {
             userDoc['favourite_products_list'];
         favouriteProducts =  favouriteProductsDynamic.cast<int>();
         setFavouriteList(favouriteProductsDynamic.cast<int>());
+        print('Fav list $_favProductList');
         notifyListeners();
       }
     } catch (e) {
@@ -73,6 +79,25 @@ class ProductProvider with ChangeNotifier {
     }
     return favouriteProducts;
   }
+
+  List<ProductModel>? getFavData(){
+    if (_productList == null || _favProductList == null) {
+      return null; // or throw an exception, depending on your requirements
+    }
+
+    _favProductsData = [];
+    _productList?.forEach(
+          (element) {
+        if (_favProductList?.contains(element.id) ?? false) {
+          _favProductsData?.add(element);
+          print(_favProductsData?.first);
+        }
+      },
+    );
+    notifyListeners();
+    return _favProductsData;
+  }
+
 
   // get Product list API method
   Future getProductDataList(

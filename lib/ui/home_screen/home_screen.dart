@@ -2,7 +2,7 @@
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_task/infrastructure/provider/provider_registration.dart';
-import 'package:e_commerce_task/ui/login_screen/login_screen.dart';
+import 'package:e_commerce_task/ui/favourite_screen/favourite_screen.dart';
 import 'package:e_commerce_task/ui/product_detail_screen/product_detail_screen.dart';
 import 'package:e_commerce_task/ui/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -45,22 +45,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             )),
         actions: [
           InkWell(
-              onTap: () async {
-                await ref.read(authProvider).signOut();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LoginScreen(),
-                  ),
-                  (route) => true,
-                );
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FavouriteScreen(),
+                    ));
               },
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.logout,
-                ),
-              ))
+              child: const Icon(Icons.favorite_border_rounded))
         ],
         title: Text(
           'Product List',
