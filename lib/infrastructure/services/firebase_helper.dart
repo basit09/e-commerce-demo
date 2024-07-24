@@ -35,8 +35,7 @@ class FirebaseHelper {
           apiKey: 'AIzaSyCJ4ZYTdo3nHtS4iYAfHtGv_pRmBVIoWjI',
           appId: '1:130988735620:ios:1c2b5a22ad65e16a4d96d1',
           messagingSenderId: '130988735620',
-          projectId: 'e-commerce-f02f7',
-          storageBucket: 'gs://e-commerce-f02f7.appspot.com');
+          projectId: 'e-commerce-f02f7',);
     }
   }
 }
